@@ -14,9 +14,15 @@ class SolicitudController extends Controller
      */
     public function index(Request $request)
     {
-        $solicitudes = auth()->user()->solicitudes()
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = auth()->user()->solicitudes()->orderBy('created_at', 'desc');
+
+        // TAREA 3: Filtro por estado
+
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        $solicitudes = $query->get();
 
         return view('solicitudes.index', compact('solicitudes'));
     }

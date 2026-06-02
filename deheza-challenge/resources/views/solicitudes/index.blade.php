@@ -14,12 +14,16 @@
 {{--
     TAREA 2 y 3: Agregar aquí el formulario de filtro por estado.
     Ejemplo de estructura sugerida (completar la lógica):
-
-    <form method="GET" action="{{ route('solicitudes.index') }}" class="mb-4">
-        <select name="estado" ...>
-            ...
+    <form method="GET" action="{{ route('solicitudes.index') }}" class="mb-4 flex gap-3 items-center">
+        <select name="estado" class="border rounded px-3 py-2 text-sm text-gray-700 bg-white" onchange="this.form.submit()">
+            <option value="">Todos</option>
+            @foreach(['pendiente', 'en proceso', 'resuelto'] as $e)
+                <option value="{{ $e }}" {{ request('estado') === $e ? 'selected' : '' }}>
+                    {{ ucfirst($e) }}
+                </option>
+            @endforeach
         </select>
-        <button type="submit">Filtrar</button>
+        <noscript><button type="submit" class="bg-gray-200 px-3 py-2 rounded text-sm text-gray-700">Filtrar</button></noscript>
     </form>
 --}}
 

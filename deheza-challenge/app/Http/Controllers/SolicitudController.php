@@ -14,7 +14,9 @@ class SolicitudController extends Controller
      */
     public function index(Request $request)
     {
-        $solicitudes = Solicitud::orderBy('created_at', 'desc')->get();
+        $solicitudes = auth()->user()->solicitudes()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('solicitudes.index', compact('solicitudes'));
     }

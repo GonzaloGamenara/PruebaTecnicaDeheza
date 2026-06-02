@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Solicitud;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use App\Http\Requests\SolicitudRequest;
 
 class SolicitudController extends Controller
 {
@@ -33,14 +34,8 @@ class SolicitudController extends Controller
         return view('solicitudes.create', compact('categorias'));
     }
 
-    public function store(Request $request)
+    public function store(SolicitudRequest $request)
     {
-        $request->validate([
-            'titulo'       => 'required|string|max:100',
-            'descripcion'  => 'required|string',
-            'categoria_id' => 'required|exists:categorias,id',
-        ]);
-
         Solicitud::create([
             'user_id'      => auth()->id(),
             'categoria_id' => $request->categoria_id,
@@ -70,15 +65,8 @@ class SolicitudController extends Controller
         return view('solicitudes.edit', compact('solicitud', 'categorias'));
     }
 
-    public function update(Request $request, Solicitud $solicitud)
+    public function update(SolicitudRequest $request, Solicitud $solicitud)
     {
-        $request->validate([
-            'titulo'       => 'required|string|max:100',
-            'descripcion'  => 'required|string',
-            'categoria_id' => 'required|exists:categorias,id',
-            'estado'       => 'required|in:pendiente,en proceso,resuelto',
-        ]);
-
         $solicitud->update($request->only('titulo', 'descripcion', 'categoria_id', 'estado'));
 
         return redirect()->route('solicitudes.index')

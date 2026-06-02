@@ -53,7 +53,7 @@ class SolicitudController extends Controller
     /**
      * TAREA 1: Este método tiene un bug.
      * El formulario de edición carga pero los campos aparecen vacíos.
-     * Encontrá la causa y corregila.
+     * Encontrá la causa y corregila
      */
     public function edit(Solicitud $solicitud)
     {
